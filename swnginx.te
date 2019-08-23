@@ -1,0 +1,16 @@
+
+module swnginx 1.0;
+
+require {
+	type user_tmp_t;
+	type unconfined_t;
+	type httpd_t;
+	class sock_file write;
+	class unix_stream_socket connectto;
+}
+
+#============= httpd_t ==============
+allow httpd_t unconfined_t:unix_stream_socket connectto;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t user_tmp_t:sock_file write;
