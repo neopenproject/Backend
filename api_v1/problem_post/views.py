@@ -22,7 +22,7 @@ class ProblemPost(Resource):
                 parser.add_argument('request')
                 params = vars(parser.parse_args())
                 self.logger.info("파라미터")
-                self.lggoer.info(params)
+                self.logger.info(params)
 
 
             file = request.files['file']
