@@ -47,7 +47,6 @@ class CusAuthView(Resource):
         try:
             params = request.get_json()
             self.logger.info("로그인 파라미터")
-            self.logger.info(params)
 
             email = params['email']
             pwd = params['pwd']
@@ -60,4 +59,5 @@ class CusAuthView(Resource):
             self.logger.warning(error_msg)
             self.logger.warning(e)
             response = set_response("01", error_msg)
+        self.logger.info(response)
         return jsonify(response)
