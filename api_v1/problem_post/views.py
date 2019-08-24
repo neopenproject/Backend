@@ -20,7 +20,7 @@ class ProblemPost(Resource):
             if params is None:
                 parser = reqparse.RequestParser()
                 parser.add_argument('request')
-                args = parser.parse_args()
+                args = parser.parse_args().replace("\\n", "")
                 self.logger.info(args)
 
                 params = vars(args)
