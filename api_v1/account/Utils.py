@@ -13,16 +13,18 @@ class AccountUtils:
     @classmethod
     def set_pwd(cls, pwd, salt):
         try:
-            if isinstance(pwd, bytes):
-                pwd = pwd.encode()
-
-            if isinstance(salt, bytes):
-                salt = salt.encode()
-
             cls.logger.info(pwd)
+            cls.logger.info(dir(pwd))
             cls.logger.info(type(pwd))
             cls.logger.info(salt)
             cls.logger.info(type(salt))
+            if isinstance(pwd, bytes):
+                cls.logger.info("set_pwd pwd is byte convert")
+                pwd = pwd.encode('utf-8')
+
+            if isinstance(salt, bytes):
+                cls.logger.info("set_pwd salt is byte convert")
+                salt = salt.encode('utf-8')
 
             hash_pwd = bcrypt.hashpw(pwd, salt).hex()
         except BaseException as e:
@@ -34,7 +36,7 @@ class AccountUtils:
     @classmethod
     def chk_pwd(cls, pwd, hash_pwd):
         pwd = pwd.encode()
-        hash_pwd = hash_pwd.encode()
+        hash_pwd = hash_pwd.encode('utf-8')
         if pwd == hash_pwd:
             return True
         else:
