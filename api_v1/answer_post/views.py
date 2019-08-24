@@ -11,12 +11,13 @@ class AnswerPost(Resource):
     def get(self):
         try:
             filters = request.args
-            answer_post = AnswerPostService.mysql_fetch_answer_post(filters)
-            response = set_response("00", {"answer_post": answer_post})
+
+            count, answer_post = AnswerPostService.mysql_fetch_answer_post(filters)
+            response = set_response("00", {"answer_post": answer_post, "count": count})
         except BaseException as e:
             self.logger.warning("answer get error")
             self.logger.warning(e)
-            response = set_response("77", {"errorMsg":"답안 요청중 에러가 발생했습니다."})
+            response = set_response("77", {"errorMsg": "답안 요청중 에러가 발생했습니다."})
         return response
 
     def post(self):

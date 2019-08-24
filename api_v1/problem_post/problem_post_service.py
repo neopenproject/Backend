@@ -6,13 +6,20 @@ from datetime import datetime as dt
 
 class ProblemPostService:
     @classmethod
-    def mysql_fetch_problem_post(cls, filter=None):
+    def mysql_fetch_problem_post(cls, filters=None):
         problem_post_list = []
         with session_scope() as session:
-            if filter.get('order') is not None:
-                problem_model = session.query(ProblemPost).order_by(ProblemPost.view.desc())
+            filter_list = []
+            for filter in filters.items():
+                key = filter[0]
+                value = filter[1]
+                if key == 'affiliation':
+                    filter_list.append(ProblemPost.affiliation == value)
+
+            if filters.get('order') is not None:
+                problem_model = session.query(ProblemPost).filter(*filter_list).order_by(ProblemPost.view.desc())
             else:
-                problem_model = session.query(ProblemPost).order_by(ProblemPost.updated_at.desc())
+                problem_model = session.query(ProblemPost).filter(*filter_list).order_by(ProblemPost.updated_at.desc())
 
             for problem in problem_model:
                 obj = {

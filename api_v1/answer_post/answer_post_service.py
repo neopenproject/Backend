@@ -9,16 +9,15 @@ class AnswerPostService:
     def mysql_fetch_answer_post(cls, filters=None):
         answer_post_list = []
         with session_scope() as session:
-            filter_list=[]
+            filter_list = []
             for filter in filters.items():
                 key = filter[0]
                 value = filter[1]
                 if key == 'problem_post':
                     filter_list.append(AnswerPost.problem_post == value)
-
             answer_model = session.query(AnswerPost).filter(*filter_list)
 
-
+        count = answer_model.count()
 
         for answer in answer_model:
             obj = {
@@ -37,7 +36,8 @@ class AnswerPostService:
                 'updated_at': answer.updated_at
             }
             answer_post_list.append(obj)
-        return answer_post_list
+
+        return count, answer_post_list
 
     @classmethod
     def mysql_create_answer_post(cls, params, file=None):
