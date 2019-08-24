@@ -8,7 +8,7 @@ from api_v1.answer_post.answer_post_service import AnswerPostService
 class AnswerPost(Resource):
     logger = create_logger(__name__)
 
-    def get(self):
+    def get(self, post_id=None):
         try:
             parser = reqparse.RequestParser()
             parser.add_argument('is_grade')  # 채점여부
@@ -18,6 +18,12 @@ class AnswerPost(Resource):
             user_type = request.args.get('user_type')
             if user_type is not None:
                 filters['author'] = g.uid
+
+            if post_id is not None:
+                answer_post = AnswerPostService.mysql_fetch_answer_post_p(post_id)
+                response = set_response("00", {"answer_pot": answer_post})
+                return response
+
             count, answer_post = AnswerPostService.mysql_fetch_answer_post(filters)
             response = set_response("00", {"answer_post": answer_post, "count": count})
         except BaseException as e:
@@ -26,7 +32,7 @@ class AnswerPost(Resource):
             response = set_response("77", {"errorMsg": "답안 요청중 에러가 발생했습니다."})
         return response
 
-    def post(self):
+    def post(self, post_id=None):
         self.logger.info("---> ProblemPost create")
         author = g.uid
         if author is None:
@@ -64,5 +70,6 @@ class AnswerPost(Resource):
 
         return response
 
-    def put(self):
+    def put(self, post_id=None):
+
         return "Answer Put"

@@ -6,6 +6,27 @@ from datetime import datetime as dt
 
 class AnswerPostService:
     @classmethod
+    def mysql_fetch_answer_post_p(cls, post_id):
+        with session_scope() as session:
+            answer = session.query(AnswerPost).filter(AnswerPost.id == post_id).first()
+            obj = {
+                'id': answer.id,
+                'time': answer.time,
+                'answer_img': answer.answer_img,
+                'is_over': answer.is_over,
+                'author': answer.author,
+                'is_grade_view': answer.is_grade_view,
+                'score': answer.score,
+                'problem_post': answer.problem_post,
+                'comment': answer.comment,
+                'is_teacher_view': answer.is_teacher_view,
+                'is_grade': answer.is_grade,
+                'created_at': answer.created_at,
+                'updated_at': answer.updated_at
+            }
+        return obj
+
+    @classmethod
     def mysql_fetch_answer_post(cls, filters=None):
         answer_post_list = []
         with session_scope() as session:
