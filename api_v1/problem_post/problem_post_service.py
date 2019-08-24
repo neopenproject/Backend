@@ -1,5 +1,6 @@
 from settings.database import session_scope
 from api_v1.problem_post.models import ProblemPost
+from api_v1.answer_post.models import AnswerPost
 from Utils.utils import set_response, upload_img
 from datetime import datetime as dt
 
@@ -22,6 +23,7 @@ class ProblemPostService:
                 problem_model = session.query(ProblemPost).filter(*filter_list).order_by(ProblemPost.updated_at.desc())
 
             for problem in problem_model:
+                count = session.query(AnswerPost).filter(AnswerPost.problem_post == problem.id).distinct(AnswerPost.author).count()
                 obj = {
                     'id': problem.id,
                     'max_time': problem.max_time,
@@ -34,7 +36,8 @@ class ProblemPostService:
                     'author': problem.author,
                     'affiliation': problem.affiliation,
                     'created_at': problem.created_at,
-                    'updated_at': problem.updated_at
+                    'updated_at': problem.updated_at,
+                    'count': count
                 }
                 problem_post_list.append(obj)
         return problem_post_list
