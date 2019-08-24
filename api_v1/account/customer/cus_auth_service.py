@@ -68,7 +68,7 @@ class CusAuthService:
             if isauth:
                 cus = {
                     'email': email,
-                    'cid': cid
+                    'uid': cid
                 }
                 access_token = AccountUtils.get_token(cus)
                 response = set_response("00", {"token": access_token})

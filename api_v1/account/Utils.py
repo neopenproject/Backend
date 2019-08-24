@@ -46,7 +46,7 @@ class AccountUtils:
 
     @classmethod
     def create_token(cls, payload):
-        access_token = jwt.encode(payload, config['SECRET_KEY'], algorithm='HS256')
+        access_token = jwt.encode(payload, config['SECRET_KEY'])
         return access_token.decode()
 
     @classmethod
