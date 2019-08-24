@@ -13,10 +13,18 @@ class AccountUtils:
     @classmethod
     def set_pwd(cls, pwd, salt):
         try:
+            if isinstance(pwd, bytes):
+                pwd = pwd.encode()
+
+            if isinstance(salt, bytes):
+                salt = salt.encode()
+
             cls.logger.info(pwd)
             cls.logger.info(type(pwd))
-            pwd = pwd.encode()
-            hash_pwd = bcrypt.hashpw(pwd, salt.encode()).hex()
+            cls.logger.info(salt)
+            cls.logger.info(type(salt))
+
+            hash_pwd = bcrypt.hashpw(pwd, salt).hex()
         except BaseException as e:
             cls.logger.warning('비밀번호 생성 오류')
             cls.logger.warning(e)
