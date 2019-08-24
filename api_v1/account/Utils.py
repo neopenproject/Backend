@@ -13,11 +13,7 @@ class AccountUtils:
     @classmethod
     def set_pwd(cls, pwd, salt):
         try:
-            cls.logger.info(pwd)
-            cls.logger.info(dir(pwd))
-            cls.logger.info(type(pwd))
-            cls.logger.info(salt)
-            cls.logger.info(type(salt))
+            cls.logger.info("===set_passwd start===")
 
             if not isinstance(pwd, bytes):
                 cls.logger.info("set_pwd pwd is byte convert")
@@ -26,8 +22,12 @@ class AccountUtils:
             if not isinstance(salt, bytes):
                 cls.logger.info("set_pwd salt is byte convert")
                 salt = salt.encode('utf-8')
-
+            cls.logger.info("===========================params=================")
+            cls.logger.info(pwd)
+            cls.logger.info(salt)
+            cls.logger.info("===========================params=================")
             hash_pwd = bcrypt.hashpw(pwd, salt).hex()
+            cls.logger.info(hash_pwd)
         except BaseException as e:
             cls.logger.warning('비밀번호 생성 오류')
             cls.logger.warning(e)

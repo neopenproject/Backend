@@ -59,7 +59,6 @@ class CusAuthService:
         with session_scope() as session:
             customer = session.query(Customer).filter(Customer.email == email).first()
             cls.logger.info("{} 조회성공".format(customer.email))
-
             if customer is None:
                 response = set_response("99", {"errorMsg": "존재하지 않는 이메일입니다."})
                 return response
