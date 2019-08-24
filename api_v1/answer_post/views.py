@@ -21,7 +21,7 @@ class AnswerPost(Resource):
 
             if post_id is not None:
                 answer_post = AnswerPostService.mysql_fetch_answer_post_p(post_id)
-                response = set_response("00", {"answer_pot": answer_post})
+                response = set_response("00", {"answer_post": answer_post})
                 return response
 
             count, answer_post = AnswerPostService.mysql_fetch_answer_post(filters)
