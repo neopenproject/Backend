@@ -17,7 +17,7 @@ config = {
 DATABASE = {
     'database': 'mysql',
     'account': 'root',
-    'password': 'test123',
+    'password': 'win3758e',
     'db_name': 'test',
     'host': 'localhost',
     'port': '3306'

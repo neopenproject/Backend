@@ -3,6 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from settings.configs import DATABASE
 from contextlib import contextmanager
+from log import create_logger
+
+db_logger = create_logger("db")
 
 Base = declarative_base()
 
@@ -25,8 +28,10 @@ try:
         ))
     else:
         print('데이터베이스 설정이 필요합니다.')
+        db_logger.warning("데이터베이스 설정이 필요합니다.")
 except KeyError as key:
     print('데이터베이스 설정이 필요합니다. {}'.format(key))
+    db_logger.warning("데이터베이스 설정이 필요합니다.{}".format(key))
 
 if engine is not None:
     Session = sessionmaker(bind=engine)
@@ -45,10 +50,13 @@ if engine is not None:
             session.rollback()
             print('[error] faild db commit')
             print(e)
+            db_logger.warning("failed session")
+            db_logger.warning(e)
             raise
         finally:
             session.close()
 else:
+    db_logger.warning("failed connect")
     print('데이터베이스 연결 실패')
 
 
