@@ -4,13 +4,22 @@ from functools import wraps
 from datetime import datetime as dt
 import bcrypt
 import jwt
+from log import create_logger
 
 
 class AccountUtils:
+    logger = create_logger(__name__)
+
     @classmethod
     def set_pwd(cls, pwd, salt):
-        pwd = pwd.encode()
-        hash_pwd = bcrypt.hashpw(pwd, salt.encode()).hex()
+        try:
+            cls.logger.info(pwd)
+            pwd = pwd.encode()
+            hash_pwd = bcrypt.hashpw(pwd, salt.encode()).hex()
+        except BaseException as e:
+            cls.logger.warning('비밀번호 생성 오류')
+            cls.logger.warning(e)
+            raise
         return hash_pwd
 
     @classmethod
