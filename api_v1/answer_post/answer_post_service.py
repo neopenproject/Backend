@@ -110,6 +110,8 @@ class AnswerPostService:
     def mysql_update_answer_post(cls, post_id, comment, score):
         with session_scope() as session:
             answer_model = session.query(AnswerPost).filter(AnswerPost.id == post_id).first()
+            if answer_model.is_grade == True:
+                response = set_response("77", {"errorMsg": "이미 첨삭된 답안입니다."})
             answer_model.is_grade = True
             answer_model.score = score
             answer_model.comment = comment

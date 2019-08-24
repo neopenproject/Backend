@@ -46,6 +46,9 @@ class CusAuthView(Resource):
     def post(self):
         try:
             params = request.get_json()
+            self.logger.info("로그인 파라미터")
+            self.logger.info(params)
+
             email = params['email']
             pwd = params['pwd']
 
