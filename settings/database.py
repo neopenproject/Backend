@@ -12,7 +12,7 @@ Base = declarative_base()
 engine = None
 
 DB_STRING = {
-    "mysql": "mysql://{account}:{password}@{host}:{port}/{db_name}?charset=utf8mb4",
+    "mysql": "mysql://{account}:{password}@{host}:{port}/{db_name}",
     "postgre": "postgresql://{account}:{password}@{host}:{port}/{db_name}"
 }
 
