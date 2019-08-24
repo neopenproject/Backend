@@ -16,10 +16,13 @@ class ProblemPost(Resource):
         self.logger.info("---> ProblemPost create")
         try:
             params = request.get_json()
+            self.logger.info(params)
             if params is None:
                 parser = reqparse.RequestParser()
                 parser.add_argument('request')
                 params = vars(parser.parse_args())
+                self.logger.info("파라미터")
+                self.lggoer.info(params)
 
 
             file = request.files['file']
