@@ -14,6 +14,7 @@ class AccountUtils:
     def set_pwd(cls, pwd, salt):
         try:
             cls.logger.info(pwd)
+            cls.logger.info(type(pwd))
             pwd = pwd.encode()
             hash_pwd = bcrypt.hashpw(pwd, salt.encode()).hex()
         except BaseException as e:
