@@ -40,9 +40,9 @@ def before_request():
             main_logger.warning("access error")
             return abort(401)
 
-        print(payload)
         uid = payload['uid']
         email = payload['email']
+        main_logger.info(uid)
         g.uid = uid
         g.user_email = email
 
