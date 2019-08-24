@@ -54,6 +54,8 @@ class CusAuthService:
     def login(cls, email, pwd):
         # 아이디, pwd 확인
         cls.logger.info("login 진입")
+        cls.logger.info(email)
+        cls.logger.info(pwd)
         with session_scope() as session:
             customer = session.query(Customer).filter(Customer.email == email).first()
             cls.logger.info("{} 조회성공".format(customer.email))
@@ -73,12 +75,13 @@ class CusAuthService:
                     }
                     access_token = AccountUtils.get_token(cus)
                     response = set_response("00", {"token": access_token})
+                else:
+                    response = set_response("99", {"errorMsg": '회원정보가 틀렸습니다.'})
             except BaseException as e:
                 cls.logger.warning("크리티컬 이슈")
                 cls.logger.warning(e)
                 response = set_response("99", {"errorMsg": '토큰 생성 실패'})
-            else:
-                response = set_response("99", {"errorMsg": '회원정보가 틀렸습니다.'})
+
         cls.logger.info("login response==")
         cls.logger.info(response)
         return response
