@@ -23,11 +23,7 @@ class AccountUtils:
                 cls.logger.info("set_pwd salt is byte convert")
                 salt = salt.encode('utf-8')
             cls.logger.info("===========================params=================")
-            cls.logger.info(pwd)
-            cls.logger.info(salt)
-            cls.logger.info("===========================params=================")
             hash_pwd = bcrypt.hashpw(pwd, salt).hex()
-            cls.logger.info(hash_pwd)
         except BaseException as e:
             cls.logger.warning('비밀번호 생성 오류')
             cls.logger.warning(e)
