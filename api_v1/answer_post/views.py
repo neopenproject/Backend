@@ -13,7 +13,7 @@ class AnswerPost(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('is_grade')  # 채점여부
             parser.add_argument('is_teacher_view')  # 선생확인여부
-            parser.add_argument('is_grade_view')    # 내가 확인함
+            parser.add_argument('is_grade_view')  # 내가 확인함
             filters = parser.parse_args()
             user_type = request.args.get('user_type')
             if user_type is not None and user_type == "cus":
@@ -21,7 +21,7 @@ class AnswerPost(Resource):
 
             elif user_type == "teacher":
                 if post_id is None:
-                    response= set_response("77", "잘못된 접근입니다.")
+                    response = set_response("77", "잘못된 접근입니다.")
                     return response
                 else:
                     answer_post = AnswerPostService.mysql_fetch_answer_post_p(post_id, True)
@@ -82,7 +82,6 @@ class AnswerPost(Resource):
     def put(self, post_id=None):
 
         return "Answer Put"
-
 
 
 class AnswerPostPk(Resource):
@@ -90,18 +89,31 @@ class AnswerPostPk(Resource):
 
     def get(self, post_id=None):
         try:
-            parser = reqparse.RequestParser()
-            parser.add_argument('is_grade')  # 채점여부
-            parser.add_argument('is_teacher_view')  # 선생확인여부
-            parser.add_argument('is_grade_view')    # 내가 확인함
-            filters = parser.parse_args()
+            # parser = reqparse.RequestParser()
+            # parser.add_argument('is_grade', required=False)  # 채점여부
+            # parser.add_argument('is_teacher_view', required=False)  # 선생확인여부
+            # parser.add_argument('is_grade_view', required=False)    # 내가 확인함
+            # filters = parser.parse_args()
+            is_grade = request.args.get('is_grade')
+            is_teacher_view = request.args.get('is_teacher_view')
+            is_grade_view = request.args.get('is_grade_view')
+            filters = {}
+            if is_grade is not None:
+                filters['is_grade'] = is_grade
+
+            if is_teacher_view is not None:
+                filters['is_teacer_view'] = is_teacher_view
+
+            if is_grade_view is not None:
+                filters['is_grade_view'] = is_grade_view
+
             user_type = request.args.get('user_type')
             if user_type is not None and user_type == "cus":
                 filters['author'] = g.uid
 
             elif user_type == "teacher":
                 if post_id is None:
-                    response= set_response("77", "잘못된 접근입니다.")
+                    response = set_response("77", "잘못된 접근입니다.")
                     return response
                 else:
                     answer_post = AnswerPostService.mysql_fetch_answer_post_p(post_id, True)
@@ -160,5 +172,13 @@ class AnswerPostPk(Resource):
         return response
 
     def put(self, post_id=None):
-
-        return "Answer Put"
+        try:
+            params = request.get_json()
+            comment = params['comment']
+            score = params['score']
+            response = AnswerPostService.mysql_update_answer_post(post_id, comment, score)
+        except BaseException as e:
+            self.logger.warning(e)
+            self.logger.warning("answer put!")
+            response = set_response("88", {"errorMsg": "문제 채점중 에러가 발생했습니다."})
+        return response

@@ -11,6 +11,8 @@ class AnswerPostService:
             answer = session.query(AnswerPost).filter(AnswerPost.id == post_id).first()
             if is_teacher is not None:
                 answer.is_teacher_view = True
+            elif answer.is_grade:  # 확인중 채점되어있다면
+                answer.is_grade_view = True
 
             obj = {
                 'id': answer.id,
@@ -102,4 +104,14 @@ class AnswerPostService:
             session.add(answer_post_model)
             response = set_response("00", {"successMsg": "성공적으로 등록되었습니다."})
 
+        return response
+
+    @classmethod
+    def mysql_update_answer_post(cls, post_id, comment, score):
+        with session_scope() as session:
+            answer_model = session.query(AnswerPost).filter(AnswerPost.id == post_id).first()
+            answer_model.is_grade = True
+            answer_model.score = score
+            answer_model.comment = comment
+            response = set_response("00", {"successMsg": "성공적으로 채점되었습니다."})
         return response
