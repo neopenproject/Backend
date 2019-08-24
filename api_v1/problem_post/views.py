@@ -10,7 +10,14 @@ class ProblemPost(Resource):
     logger = create_logger(__name__)
 
     def get(self):
-        return __name__ + "GET"
+        try:
+            problem_posts = ProblemPostService.mysql_fetch_problem_post()
+            response = set_response("00", {"problem_posts": problem_posts})
+        except BaseException as e:
+            self.logger.warning("problem post get error")
+            self.logger.warning(e)
+            response = set_response("88", {"errorMsg": "알수없는 에러"})
+        return response
 
     def post(self):
         self.logger.info("---> ProblemPost create")
