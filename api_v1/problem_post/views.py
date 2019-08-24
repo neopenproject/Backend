@@ -19,14 +19,26 @@ class ProblemPost(Resource):
             self.logger.info(params)
             if params is None:
                 parser = reqparse.RequestParser()
-                parser.add_argument('request')
-                args = parser.parse_args().replace("\\n", "")
+                parser.add_argument('max_time')
+                parser.add_argument('title')
+                parser.add_argument('sub_title')
+                parser.add_argument('subject')
+                parser.add_argument('category')
+                parser.add_argument('author')
+                parser.add_argument('affiliation')
+                args = parser.parse_args()
                 self.logger.info(args)
-
-                params = vars(args)
+                params = {
+                    'max_time': args.max_time,
+                    'title': args.title,
+                    'sub_title': args.sub_title,
+                    'subject': args.subject,
+                    'category': args.category,
+                    'author': args.author,
+                    'affiliation': args.affiliation
+                }
                 self.logger.info("파라미터")
                 self.logger.info(params)
-
 
             file = request.files['file']
 
