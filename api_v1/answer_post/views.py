@@ -10,8 +10,14 @@ class AnswerPost(Resource):
 
     def get(self):
         try:
-            filters = request.args
-
+            parser = reqparse.RequestParser()
+            parser.add_argument('is_grade')  # 채점여부
+            parser.add_argument('is_teacher_view')  # 선생확인여부
+            parser.add_argument('is_grade_view')    # 내가 확인함
+            filters = parser.parse_args()
+            user_type = request.args.get('user_type')
+            if user_type is not None:
+                filters['author'] = g.uid
             count, answer_post = AnswerPostService.mysql_fetch_answer_post(filters)
             response = set_response("00", {"answer_post": answer_post, "count": count})
         except BaseException as e:

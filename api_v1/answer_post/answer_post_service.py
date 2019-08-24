@@ -15,6 +15,29 @@ class AnswerPostService:
                 value = filter[1]
                 if key == 'problem_post':
                     filter_list.append(AnswerPost.problem_post == value)
+                if key == 'is_grade':
+                    if value is None:
+                        continue
+                    else:
+                        filter_list.append(AnswerPost.is_grade == True if value == 'true' else False)
+                if key == 'is_teacher_view':
+                    if value is None:
+                        continue
+                    else:
+                        filter_list.append(AnswerPost.is_teacher_view == True if value == 'true' else False)
+
+                if key == 'is_grade_view':
+                    if value is None:
+                        continue
+                    else:
+                        filter_list.append(AnswerPost.is_grade_view == True if value == 'true' else False)
+
+                if key == "author":
+                    if value is None:
+                        continue
+                    else:
+                        filter_list.append(AnswerPost.author == value)
+
             answer_model = session.query(AnswerPost).filter(*filter_list)
 
         count = answer_model.count()

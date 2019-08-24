@@ -23,7 +23,8 @@ class ProblemPostService:
                 problem_model = session.query(ProblemPost).filter(*filter_list).order_by(ProblemPost.updated_at.desc())
 
             for problem in problem_model:
-                count = session.query(AnswerPost).filter(AnswerPost.problem_post == problem.id).distinct(AnswerPost.author).count()
+                count = session.query(AnswerPost).filter(AnswerPost.problem_post == problem.id).distinct(
+                    AnswerPost.author).count()
                 obj = {
                     'id': problem.id,
                     'max_time': problem.max_time,
