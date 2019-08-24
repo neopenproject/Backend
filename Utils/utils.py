@@ -17,6 +17,12 @@ def upload_img(path, file):
     filename = "{}{}".format(current_date, filename)
 
     upload_text = os.path.join(path, date_path, filename)
+
+    image_dir = os.path.dirname(upload_text)
+
+    if os.path.isdir(image_dir):
+        os.mkdir(image_dir)
+
     file.save(upload_text)
     return upload_text
 
