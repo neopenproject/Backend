@@ -19,8 +19,6 @@ class CusAuthService:
     @classmethod
     def create_user(cls, email, pwd):
         cls.logger.info("create_user")
-        cls.logger.info(email)
-        cls.logger.info(pwd)
 
         cus = None
         try:
@@ -81,4 +79,6 @@ class CusAuthService:
                 response = set_response("99", {"errorMsg": '토큰 생성 실패'})
             else:
                 response = set_response("99", {"errorMsg": '회원정보가 틀렸습니다.'})
+        cls.logger.info("login response==")
+        cls.logger.info(response)
         return response
