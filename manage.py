@@ -29,6 +29,7 @@ def auth_faild(error):
 
 @app.before_request
 def before_request():
+    main_logger.info(request.headers.get('Content-Type'))
     access_token = request.headers.get("Authorization")
     if access_token is not None:
         try:
