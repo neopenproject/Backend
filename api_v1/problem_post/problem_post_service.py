@@ -9,7 +9,10 @@ class ProblemPostService:
     def mysql_fetch_problem_post(cls, filter=None):
         problem_post_list = []
         with session_scope() as session:
-            problem_model = session.query(ProblemPost).order_by(ProblemPost.updated_at.desc())
+            if filter.get('order') is not None:
+                problem_model = session.query(ProblemPost).order_by(ProblemPost.view.desc())
+            else:
+                problem_model = session.query(ProblemPost).order_by(ProblemPost.updated_at.desc())
 
             for problem in problem_model:
                 obj = {

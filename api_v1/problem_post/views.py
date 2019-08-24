@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from log import create_logger
-from flask import request
+from flask import request, g
 from flask_restful import reqparse
 from api_v1.problem_post.problem_post_service import ProblemPostService
 from Utils.utils import set_response
@@ -10,8 +10,10 @@ class ProblemPost(Resource):
     logger = create_logger(__name__)
 
     def get(self):
+        filters = request.args
+
         try:
-            problem_posts = ProblemPostService.mysql_fetch_problem_post()
+            problem_posts = ProblemPostService.mysql_fetch_problem_post(filters)
             response = set_response("00", {"problem_posts": problem_posts})
         except BaseException as e:
             self.logger.warning("problem post get error")

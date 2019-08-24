@@ -2,7 +2,7 @@ import importlib
 import sys
 import jwt
 
-from flask import Flask, request, abort
+from flask import Flask, request, abort, g
 from flask_restful import Api
 from settings import configs, database
 from log import create_logger
