@@ -62,6 +62,13 @@ else:
 
 def migrate():
     from api_v1.account import models
+    from api_v1.answer_post import models
+    from api_v1.problem_post import models
+
     print('migrate')
-    Base.metadata.create_all(engine)
+    try:
+        Base.metadata.create_all(engine)
+    except BaseException as e:
+        db_logger.warning("migrate waring")
+        db_logger.warning(e)
 
