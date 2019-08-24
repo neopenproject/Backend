@@ -1,5 +1,6 @@
 from werkzeug.utils import secure_filename
 from datetime import datetime as dt
+from settings.configs import BASE_DIR
 import os
 
 
@@ -16,11 +17,11 @@ def upload_img(path, file):
     current_date = str(int(now.timestamp() * 1000000))
     filename = "{}{}".format(current_date, filename)
 
-    upload_text = os.path.join(path, date_path, filename)
+    upload_text = os.path.join('images', path, date_path, filename)
 
     image_dir = os.path.dirname(upload_text)
 
-    if os.path.isdir(image_dir):
+    if not os.path.isdir(image_dir):
         os.mkdir(image_dir)
 
     file.save(upload_text)

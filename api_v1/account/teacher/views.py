@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request, jsonify
 from Utils.utils import set_response
 from log import create_logger
-from api_v1.account.customer.cus_auth_service import CusAuthService
+from api_v1.account.teacher.tea_auth_service import TeaAuthService
 
 
 class TeacherAccount(Resource):
@@ -18,8 +18,8 @@ class TeacherAccount(Resource):
             pwd = params['pwd']
 
             # 이메일 존재하는지
-            if not CusAuthService.IsUseAccount(email):
-                response = CusAuthService.create_user(email, pwd)  # 존재 하지 않다면 회원가입
+            if not TeaAuthService.IsUseAccount(email):
+                response = TeaAuthService.create_user(email, pwd)  # 존재 하지 않다면 회원가입
             else:
                 response = set_response("C01", "이미 존재하는 이메일 입니다.")
 
@@ -50,7 +50,7 @@ class TeaAuthView(Resource):
             pwd = params['pwd']
 
             # 로그인
-            response = CusAuthService.login(email, pwd)
+            response = TeaAuthService.login(email, pwd)
 
         except BaseException as e:
             error_msg = "시스템 에러가 발생했습니다."

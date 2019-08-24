@@ -11,14 +11,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FORMAT_STRING = '[%(levelname)s][%(asctime)s][%(name)s][line : %(lineno)s][func : %(funcName)2s()] %(message)s'
 
 config = {
-    'SECRET_KEY': 'neok4ng49m*kt258g)%)ss%h-^w+l7b+#lvmhu(c0d!ik5!%+26i!olas'
+    'SECRET_KEY': 'ABCDEFGASD'
 }
 
 DATABASE = {
     'database': 'mysql',
-    'account': 'nepenthes',
+    'account': 'root',
     'password': 'win3758e',
     'db_name': 'test',
-    'host': 'mysql-nepenthes.ccdd77mi4olw.ap-northeast-2.rds.amazonaws.com',
+    'host': 'localhost',
     'port': '3306'
 }

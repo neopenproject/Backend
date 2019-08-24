@@ -1,6 +1,8 @@
 from flask_restful import Resource
 from log import create_logger
 from flask import request
+from flask_restful import reqparse
+from api_v1.problem_post.problem_post_service import ProblemPostService
 from Utils.utils import set_response
 
 
@@ -11,7 +13,27 @@ class ProblemPost(Resource):
         return __name__ + "GET"
 
     def post(self):
-        return __name__ + "POST"
+        self.logger.info("---> ProblemPost create")
+        try:
+            params = request.get_json()
+            if params is None:
+                parser = reqparse.RequestParser()
+                parser.add_argument('request')
+                params = vars(parser.parse_args())
+
+
+            file = request.files['file']
+
+            self.logger.info(params)
+            self.logger.info(file)
+            response = ProblemPostService.mysql_create_problem_post(params, file)
+            print(file)
+        except BaseException as e:
+            self.logger.info("problemPost create params error")
+            self.logger.info(e)
+            response = set_response("88", {"errorMsg": "문제를 생성중 에러가 발생했습니다."})
+
+        return response
 
     def put(self):
         return __name__ + "Put"
