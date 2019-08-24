@@ -1,5 +1,6 @@
-from api_v1.answer_post.views import AnswerPost
+from api_v1.answer_post.views import AnswerPost, AnswerPostPk
 
 answer_post_urls = [
-    (AnswerPost, "/answer/post/<int:post_id>")
+    (AnswerPostPk, "/answer/post/<int:post_id>"),
+    (AnswerPost, "/answer/post")
 ]

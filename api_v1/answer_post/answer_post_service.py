@@ -6,9 +6,12 @@ from datetime import datetime as dt
 
 class AnswerPostService:
     @classmethod
-    def mysql_fetch_answer_post_p(cls, post_id):
+    def mysql_fetch_answer_post_p(cls, post_id, is_teacher=None):
         with session_scope() as session:
             answer = session.query(AnswerPost).filter(AnswerPost.id == post_id).first()
+            if is_teacher is not None:
+                answer.is_teacher_view = True
+
             obj = {
                 'id': answer.id,
                 'time': answer.time,
