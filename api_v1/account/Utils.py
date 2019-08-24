@@ -18,6 +18,7 @@ class AccountUtils:
             cls.logger.info(type(pwd))
             cls.logger.info(salt)
             cls.logger.info(type(salt))
+
             if not isinstance(pwd, bytes):
                 cls.logger.info("set_pwd pwd is byte convert")
                 pwd = pwd.encode('utf-8')

@@ -18,6 +18,10 @@ class CusAuthService:
 
     @classmethod
     def create_user(cls, email, pwd):
+        cls.logger.info("create_user")
+        cls.logger.info(email)
+        cls.logger.info(pwd)
+
         cus = None
         try:
             salt = AccountUtils.getn_salt()
