@@ -102,7 +102,7 @@ class AnswerPostService:
             params['updated_at'] = now
             answer_post_model = AnswerPost(**params)
             session.add(answer_post_model)
-            response = set_response("00", {"successMsg": "성공적으로 등록되었습니다."})
+            response = set_response("00", {"img_url": img_path})
 
         return response
 
