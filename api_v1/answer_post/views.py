@@ -163,12 +163,12 @@ class AnswerPostPk(Resource):
             self.logger.info(params)
             self.logger.info(file)
             response = AnswerPostService.mysql_create_answer_post(params, file)
-            print(file)
+
         except BaseException as e:
             self.logger.info("answer create params error")
             self.logger.info(e)
             response = set_response("88", {"errorMsg": "문제를 생성중 에러가 발생했습니다."})
-
+        self.logger.info(response)
         return response
 
     def put(self, post_id=None):
