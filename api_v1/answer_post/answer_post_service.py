@@ -2,9 +2,11 @@ from settings.database import session_scope
 from api_v1.answer_post.models import AnswerPost
 from Utils.utils import set_response, upload_img
 from datetime import datetime as dt
+from log import create_logger
 
 
 class AnswerPostService:
+    logger = create_logger(__name__)
     @classmethod
     def mysql_fetch_answer_post_p(cls, post_id, is_teacher=None):
         with session_scope() as session:
@@ -103,7 +105,7 @@ class AnswerPostService:
             answer_post_model = AnswerPost(**params)
             session.add(answer_post_model)
             response = set_response("00", {"img_url": img_path})
-
+        cls.logger.info(response)
         return response
 
     @classmethod

@@ -163,7 +163,7 @@ class AnswerPostPk(Resource):
             self.logger.info(params)
             self.logger.info(file)
             response = AnswerPostService.mysql_create_answer_post(params, file)
-
+            self.logger.info(response)
         except BaseException as e:
             self.logger.info("answer create params error")
             self.logger.info(e)
